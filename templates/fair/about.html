@@ -1,0 +1,50 @@
+<!-- portal/templates/home.html -->
+{% extends 'portal/base.html' %}
+{% load static %}
+
+{% block content %}
+
+    <!-- Masthead-->
+    <header class="masthead">
+        <div class="container position-relative">
+            <div class="row justify-content-center">
+                <div class="col-xl-6">
+                    <div class="text-center text-white">
+                        <!-- Page heading-->
+                        <h1 class="mb-5">A propos de AFRIC@Fair </h1>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Image Showcases-->
+    <section class="showcase">
+        <div class="container-fluid p-0">
+            <div class="row g-0">
+                <div class="col-lg-6 order-lg-2 text-white showcase-img" style="background-image: url({% static 'assets/img/af-showcase-1.png' %})"></div>
+                <div class="col-lg-6 order-lg-1 my-auto showcase-text">
+                    <h2>Quoi?</h2>
+                    <p class="lead mb-0">La plateforme digitale Afric@Fair est une foire permanente qui accueille les PME et
+                        professionnels qui ont choisi d’y domicilier leur campagne de promotion pour fidéliser
+                        la clientèle par la puissance du marketing digital.
+                    </p>
+                </div>
+            </div>
+            <div class="row g-0">
+                <div class="col-lg-6 text-white showcase-img" style="background-image: url({% static 'assets/img/af-showcase-2.jpeg' %})"></div>
+                <div class="col-lg-6 my-auto showcase-text">
+                    <h2>Pourquoi?</h2>
+                    <p class="lead mb-0">En rejoignant la communauté Afric@Fair et en y invitant leurs contacts, de
+                        nombreux consommateurs, sont gratifiés de bonus en bons d’achat offerts par nos
+                        partenaires.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+
+{% endblock content %}

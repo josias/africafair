@@ -14,7 +14,13 @@ ALLOWED_HOSTS = [
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
-django_heroku.settings(locals())
+
+
+MIDDLEWARE_CLASSES = (
+    # Simplified static file serving.
+    # https://warehouse.python.org/project/whitenoise/
+    'whitenoise.middleware.WhiteNoiseMiddleware',
+)
 
 MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
@@ -39,3 +45,6 @@ STATICFILES_DIRS = [BASE_DIR /'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 DATABASES = {'default' : dj_database_url.config(conn_max_age=600, ssl_require=True)}
+
+
+django_heroku.settings(locals())

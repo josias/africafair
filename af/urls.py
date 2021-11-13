@@ -14,7 +14,12 @@ Including another URLconf
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 from django.contrib import admin
-from django.urls import path, include
+from django.urls import re_path, path, include
+from django.views.static import serve
+
+
+# from af.settings.production import MEDIA_ROOT, STATIC_ROOT
+
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -22,4 +27,8 @@ urlpatterns = [
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('products/', include('products.urls',  namespace='products')),
     #path('api-auth/', include('rest_framework.urls')),
+
+    # Added Following Two Lines Of Code
+    # re_path(r'^media/(?P<path>.*)$', serve,{'document_root': MEDIA_ROOT}), 
+    # re_path(r'^static/(?P<path>.*)$', serve,{'document_root': STATIC_ROOT}), 
 ]

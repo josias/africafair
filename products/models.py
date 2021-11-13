@@ -1,7 +1,7 @@
 from re import I
 from django.db import models
 from af.core.models import TimestampModel
-from af.settings import AUTH_USER_MODEL
+from af.settings.base import AUTH_USER_MODEL
 
 
 class Product(TimestampModel):

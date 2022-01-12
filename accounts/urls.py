@@ -1,19 +1,23 @@
-from django.urls import include, path
-from rest_framework_simplejwt import views as jwt_views
-
+from django.urls import include, path, re_path
 from accounts.views import PasswordChangeView, PasswordChangeDoneView, PasswordResetView, PasswordResetDoneView, PasswordResetConfirmView, PasswordResetCompleteView, LoginView, LogoutView, ProfileView, SignUpView, VisitorSignUpView #, CustomerSignUpView, SellerSignUpView, OwnerSignUpView, EditorSignUpView
-from accounts.api.views import UserList, UserDetail
 
+from rest_framework_simplejwt import views as jwt_views
+from accounts.api.views import UserList, UserDetail, RegisterUserView, UserLogoutView, UserProfileViewSet
+from rest_framework.routers import DefaultRouter, SimpleRouter
+
+
+router = SimpleRouter()
+router.register(r'api/users/profiles', UserProfileViewSet)
 
 app_name = 'accounts'
-urlpatterns = [
-    # path('', include('django.contrib.auth.urls')),
-    path('api/token/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
-    path('api/token/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),
-    
-    path('api/users/', UserList.as_view(), name='users_list'),
-    path('api/users/<int:pk>/', UserDetail.as_view(), name='users_detail'),
-
+urlpatterns = router.urls + [
+    #re_path(r'api/users/profiles', include('router.urls'), name='api_users_profiles'),
+    path('api/login/', jwt_views.TokenObtainPairView.as_view(), name='token_obtain_pair'),
+    path('api/login/refresh/', jwt_views.TokenRefreshView.as_view(), name='token_refresh'),    
+    path('api/logout/', UserLogoutView.as_view(), name='api_users_logout'),
+    path('api/users/', UserList.as_view(), name='api_users_list'),
+    path('api/users/<int:pk>/', UserDetail.as_view(), name='api_users_detail'),
+    path('api/register/', RegisterUserView.as_view(), name='api_signup'),
     
     path('login/', LoginView.as_view(),name='login'),
     path('logout/', LogoutView.as_view(), name='logout'),

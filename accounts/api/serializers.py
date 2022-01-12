@@ -7,19 +7,42 @@ from rest_framework import serializers
 from rest_framework.exceptions import ValidationError
 from rest_framework import  serializers
 
-from accounts.models import CustomUser
-from products.models import Product
-
+from accounts.models import CustomUser, UserProfile
 
 class CustomUserSerializer(serializers.ModelSerializer):
-    products = serializers.PrimaryKeyRelatedField(many=True, queryset=Product.objects.all())
-
     class Meta:
         model = CustomUser
         fields = ('id', 'first_name', 'last_name', 'email')
-        extra_fields = {
-            'password':{'write_only':True},
-        }
+
+class CustomUserDRJRSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = CustomUser
+        fields = ('id', 'first_name', 'last_name', 'email', 'password')
+        
+class UserProfileSerializer(serializers.ModelSerializer):
+    url = serializers.HyperlinkedIdentityField(view_name="api:userprofile-detail")
+    user = CustomUserSerializer(many=False, read_only=True)
+
+    class Meta:
+        model = UserProfile
+        fields = '__all__'
+
+
+class RegisterSerializer(serializers.ModelSerializer):
+    password = serializers.CharField(min_length=4, max_length=128, write_only=True)
+    
+    class Meta:
+        model = CustomUser
+        fields = ["id", "first_name", "last_name", "password", "email", "is_active"]
+
+    def create(self, validated_data):
+
+        try:
+            CustomUser.objects.get(email=validated_data["email"])
+        except ObjectDoesNotExist:
+            return CustomUser.objects.create_user(**validated_data)
+
+        raise ValidationError({"success": False, "msg": "Email already taken"})
 
 
 """ from datetime import datetime, timedelta
@@ -78,21 +101,25 @@ class LoginSerializer(serializers.Serializer):
             "token": session.token,
             "user": {"_id": user.pk, "username": user.username, "email": user.email},
         }
+        
 
-
-class RegisterSerializer(serializers.ModelSerializer):
-    password = serializers.CharField(min_length=4, max_length=128, write_only=True)
-    username = serializers.EmailField(max_length=255, required=True)
+class RegistrationSerializer(serializers.ModelSerializer):
     
     class Meta:
-        model = CustomUser
-        fields = ["id", "firstname", "lastname", "password", "email", "is_active", "date"]
+        model = User
+        fields = [
+            "name",
+            "Email_Address",
+            "zipcode",
+            "Date_of_Birth",
+            "password",
 
-    def create(self, validated_data):
+        ]
 
-        try:
-            CustomUser.objects.get(email=validated_data["email"])
-        except ObjectDoesNotExist:
-            return CustomUser.objects.create_user(**validated_data)
-
-        raise ValidationError({"success": False, "msg": "Email already taken"}) """
+        extra_kwargs = {"password": {"write_only": True}}
+        password = self.validated_data["password"]
+        account.set_password(password)
+        account.save()
+        return account        
+        
+         """

@@ -1,3 +1,5 @@
 from django.contrib import admin
+from offers.models import Package, Bonus, Purchase
 
-# Register your models here.
+admin.site.register(Package)
+admin.site.register(Purchase)

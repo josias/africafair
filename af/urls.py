@@ -17,15 +17,35 @@ from django.contrib import admin
 from django.urls import re_path, path, include
 from django.views.static import serve
 
-
+from django.contrib.auth.decorators import login_required
+from drf_openapi3.schemas.advanced import AdvancedSchemaGenerator
+from rest_framework.schemas import get_schema_view
 # from af.settings.production import MEDIA_ROOT, STATIC_ROOT
 
 
+
 urlpatterns = [
+
+    path('my-schema/', login_required(
+        get_schema_view(
+            title='My API',
+            description='My API description',
+            version='1.0.0',
+            generator_class=AdvancedSchemaGenerator,
+            public=True,
+        ),
+        login_url='/accounts/login/',
+    ), name='my_schema_name'),
+
     path('admin/', admin.site.urls),
+    
     path('', include('fair.urls',  namespace='fair')),
+    path('account/', include('drjr.urls')),
     path('accounts/', include('accounts.urls', namespace='accounts')),
     path('products/', include('products.urls',  namespace='products')),
+    path('fair_sites/', include('fair_sites.urls',  namespace='fair_sites')),
+    path('businesses/', include('businesses.urls', namespace='businesses')),
+    path('offers/', include('offers.urls',  namespace='offers'))
     #path('api-auth/', include('rest_framework.urls')),
 
     # Added Following Two Lines Of Code

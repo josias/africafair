@@ -6,8 +6,19 @@ from django.core.mail import send_mail
 from django.db import models
 from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
+from af.core.models import TimestampModel
 from accounts.managers import CustomUserManager
+from af.settings.base import AUTH_USER_MODEL
+from guardian.mixins import GuardianUserMixin
 
+import uuid
+
+
+def get_anonymous_user_instance(User):
+    if User.objects.filter(email='anonymous@af.com').exists():
+        return 1
+    else:
+        return User(first_name= 'John', last_name='Doe', email='anonymous@af.com', password='12345678')
 
 
 class Role(models.Model):
@@ -34,7 +45,7 @@ class Role(models.Model):
       return self.get_id_display()
 
 
-class CustomUser(AbstractBaseUser, PermissionsMixin):
+class CustomUser(AbstractBaseUser, PermissionsMixin, GuardianUserMixin):
     roles = models.ManyToManyField(Role)
     username_validator = ASCIIUsernameValidator()
 
@@ -100,3 +111,30 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
         """Send an email to this user."""
         send_mail(subject, message, from_email, [self.email], **kwargs)
 
+
+class UserProfile(TimestampModel):
+    """This model stores all information relative to a user which doesn't belong to
+    authentication."""
+
+    FRENCH = 'FR'
+    ENGLISH = 'EN'
+    LANGUAGE_CHOICE = [
+        (FRENCH, 'français'),
+        (ENGLISH, 'english'),
+    ] 
+
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+
+    user = models.OneToOneField(AUTH_USER_MODEL,
+                                on_delete=models.CASCADE, 
+                                related_name='profile')
+    
+    language_preference = models.CharField(max_length=2,
+                                           choices=LANGUAGE_CHOICE,
+                                           default=ENGLISH)
+    def __str__(self):
+        return self.user.username
+    class Meta:
+        permissions = (
+            #('view_userprofile', 'View UserProfile'),
+        )

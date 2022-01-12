@@ -1,0 +1,6 @@
+AF API DEVELOPEMENT
+
+Login	/accounts/api/token/	generate access token and refresh token
+Register	/accounts/api/register		register a new user
+List Users	/accounts/api/users		list users
+Retrieve user	/accounts/api/users/id		retrieve a user based on id

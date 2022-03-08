@@ -70,7 +70,7 @@ class Zone(Region):
 
 class Quarter(Region):
     zone = models.ForeignKey(Zone, on_delete=models.CASCADE, related_name='quaters')
-
+    
     def get_absolute_url(self):
         return reverse('quarter-detail', kwargs={'pk': self.pk})
 

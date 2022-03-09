@@ -9,7 +9,7 @@ DEBUG = False
 ALLOWED_HOSTS = [
     'localhost',
     '0.0.0.0',
-    'africafair-backend.herokuapp.com',
+    'fair-bkd-cachalot.herokuapp.com',
 ]
 
 SECRET_KEY = os.environ['SECRET_KEY']

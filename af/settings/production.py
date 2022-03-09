@@ -4,7 +4,7 @@ import dj_database_url
 
 from af.settings.base import *
 
-DEBUG = False
+DEBUG = os.environ['DEBUG']
 
 ALLOWED_HOSTS = [
     'localhost',

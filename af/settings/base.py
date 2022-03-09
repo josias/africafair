@@ -124,6 +124,7 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Django import_export configurations
 IMPORT_EXPORT_USE_TRANSACTIONS = True

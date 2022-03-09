@@ -21,7 +21,7 @@ def products_details(request, pk):
 class ProductList(mixins.ListModelMixin, mixins.CreateModelMixin, generics.GenericAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
-    permission_classes = [permissions.IsAuthenticated]
+   
 
     def get(self, request, *args, **kwargs):
         return self.list(request, *args, **kwargs)

@@ -5,7 +5,7 @@ from rest_framework.views import APIView
 from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework_guardian import filters
 from rest_framework_simplejwt.tokens import RefreshToken 
-from .serializers import CustomUserSerializer, UserProfileSerializer, RegisterSerializer
+from .serializers import CustomUserSerializer, UserProfileSerializer, RegisterSerializer, LogoutSerializer
 from accounts.models import CustomUser, UserProfile
 
 
@@ -32,6 +32,19 @@ class RegisterUserView(generics.CreateAPIView):
 
 
 class UserLogoutView(APIView):
+    serializer_class = LogoutSerializer
+    permission_classes = (IsAuthenticated,)
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        serializer.save()
+
+        return Response(status=status.HTTP_205_RESET_CONTENT)
+        
+
+
+""" class UserLogoutView(APIView):
     permission_classes = (IsAuthenticated,)
 
     def post(self, request):
@@ -42,7 +55,7 @@ class UserLogoutView(APIView):
 
             return Response(status=status.HTTP_205_RESET_CONTENT)
         except Exception as e:
-            return Response(status=status.HTTP_400_BAD_REQUEST)
+            return Response(status=status.HTTP_400_BAD_REQUEST) """
 
 
 class UserProfileViewSet(viewsets.ModelViewSet):

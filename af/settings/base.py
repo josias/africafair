@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django_filters',
     'django_countries',
+    'import_export',
     'versatileimagefield',
     'phonenumber_field',
     'crispy_forms',
@@ -45,13 +46,15 @@ INSTALLED_APPS = [
     'rest_framework_simplejwt',
     'rest_framework_simplejwt.token_blacklist', 
     'drjr', 
+   # 'drf_spectacular',
     'drf_openapi3.apps.DRFOpenApi3Config',
+    'treebeard',
     'accounts.apps.AccountsConfig',
     'fair.apps.FairConfig',
     'products.apps.ProductsConfig',
     'fair_sites.apps.FairSitesConfig',
     'businesses.apps.BusinessesConfig',
-    'offers.apps.OffersConfig',
+    'offers.apps.OffersConfig', 
 
 ]
 
@@ -122,6 +125,9 @@ STATICFILES_DIRS = [
     BASE_DIR / 'static',
 ]
 
+# Django import_export configurations
+IMPORT_EXPORT_USE_TRANSACTIONS = True
+
 # Default primary key field type
 # https://docs.djangoproject.com/en/3.2/ref/settings/#default-auto-field
 
@@ -146,6 +152,10 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES': [
         'accounts.api.permissions.CustomObjectPermissions',
     ],
+
+  #  'DEFAULT_SCHEMA_CLASS': [
+  #      'drf_spectacular.openapi.AutoSchema',
+  #  ],
 
 }
 
@@ -254,4 +264,12 @@ VERSATILEIMAGEFIELD_RENDITION_KEY_SETS = {
         ('full_size', 'url'),
         ('thumbnail', 'thumbnail__100x100'),
     ]
+}
+
+
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'My Fair API',
+    'DESCRIPTION': 'World-class discounts market',
+    'VERSION': '1.0.0',
+    # OTHER SETTINGS
 }

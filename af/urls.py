@@ -18,6 +18,7 @@ from django.urls import re_path, path, include
 from django.views.static import serve
 
 from django.contrib.auth.decorators import login_required
+from django.views.generic import TemplateView
 from drf_openapi3.schemas.advanced import AdvancedSchemaGenerator
 from rest_framework.schemas import get_schema_view
 # from af.settings.production import MEDIA_ROOT, STATIC_ROOT
@@ -25,17 +26,6 @@ from rest_framework.schemas import get_schema_view
 
 
 urlpatterns = [
-
-    path('my-schema/', login_required(
-        get_schema_view(
-            title='My API',
-            description='My API description',
-            version='1.0.0',
-            generator_class=AdvancedSchemaGenerator,
-            public=True,
-        ),
-        login_url='/accounts/login/',
-    ), name='my_schema_name'),
 
     path('admin/', admin.site.urls),
     

@@ -133,7 +133,7 @@ class UserProfile(TimestampModel):
                                            choices=LANGUAGE_CHOICE,
                                            default=ENGLISH)
     def __str__(self):
-        return self.user.username
+        return self.user.email
     class Meta:
         permissions = (
             #('view_userprofile', 'View UserProfile'),

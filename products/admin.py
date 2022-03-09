@@ -1,11 +1,24 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
 from django.contrib.auth.admin import UserAdmin
+
+
+from treebeard.admin import TreeAdmin
+from treebeard.forms import movenodeform_factory
 
 from accounts.forms import CustomUserCreationForm, CustomUserChangeForm
 from accounts.models import CustomUser
-from products.models import Product
+from products.models import Product, Category
+
+
+class CategoryAdmin(TreeAdmin, ImportExportModelAdmin):
+    form = movenodeform_factory(Category)
+
+admin.site.register(Category, CategoryAdmin)
+
 
 admin.site.register(Product)
+
 
 class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
@@ -28,3 +41,5 @@ class CustomUserAdmin(UserAdmin):
 
 
 admin.site.register(CustomUser, CustomUserAdmin)
+
+

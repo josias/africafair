@@ -22,5 +22,5 @@ def create_user_profile(sender, instance, created, **kwargs):
         # assign_perm('accounts.change_userprofile', user, profile)
         # can_view_profile = Permission.objects.get(codename='view_userprofile')
         # user.user_permissions.add(can_view_profile)
-        visitors = Group.objects.filter(name='visitors')
-        user.groups.add(visitors[0])
+        visitors = Group.objects.get(name='visitors')
+        user.groups.add(visitors)

@@ -1,9 +1,11 @@
+from lib2to3.pgen2.tokenize import TokenError
 import jwt
 from django.conf import settings
 from django.contrib.auth import authenticate
 from django.core.exceptions import ObjectDoesNotExist
 
 from rest_framework import serializers
+from rest_framework_simplejwt.tokens import RefreshToken, TokenError
 from rest_framework.exceptions import ValidationError
 from rest_framework import  serializers
 
@@ -43,6 +45,21 @@ class RegisterSerializer(serializers.ModelSerializer):
             return CustomUser.objects.create_user(**validated_data)
 
         raise ValidationError({"success": False, "msg": "Email already taken"})
+
+
+class LogoutSerializer(serializers.Serializer):
+    refresh = serializers.CharField()
+
+    def validate(self, attrs):
+        self.token = attrs['refresh']
+        return attrs 
+
+    def save(self, **kwargs):
+        try:
+            RefreshToken(self.token).blacklist()
+        except TokenError:
+            self.fail('Bad token')
+
 
 
 """ from datetime import datetime, timedelta

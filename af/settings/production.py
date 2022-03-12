@@ -6,27 +6,34 @@ from af.settings.base import *
 
 DEBUG = os.environ['DEBUG']
 
+# ALLOWED_HOSTS = [
+#    'localhost',
+#    '0.0.0.0',
+#    'fair-bkd-cachalot.herokuapp.com',
+#]
+
 ALLOWED_HOSTS = [
-    'localhost',
-    '0.0.0.0',
-    'fair-bkd-cachalot.herokuapp.com',
+    '127.0.0.1',
+    '.herokuapp.com',
 ]
 
 SECRET_KEY = os.environ['SECRET_KEY']
 
+INSTALLED_APPS.insert(0, 'whitenoise.runserver_nostatic')
 
+# MIDDLEWARE_CLASSES = (
+    # Simplified static file serving.
+    # https://warehouse.python.org/project/whitenoise/
+#    'whitenoise.middleware.WhiteNoiseMiddleware',
+#)
 
-MIDDLEWARE_CLASSES = (
+MIDDLEWARE = [
     # Simplified static file serving.
     # https://warehouse.python.org/project/whitenoise/
     'whitenoise.middleware.WhiteNoiseMiddleware',
-)
-
-MIDDLEWARE = [
     'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.security.SecurityMiddleware',
-    # 'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',    
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.middleware.locale.LocaleMiddleware',

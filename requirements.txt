@@ -15,8 +15,8 @@ django-crispy-forms==1.13.0
 django-environ==0.8.1
 django-filter==21.1
 django-guardian==2.4.0
-django-heroku==0.3.1
 django-import-export==2.7.1
+django-on-heroku==1.1.2
 django-phonenumber-field==6.0.0
 django-rest-jwt-registration @ git+https://github.com/janos-gonye/django-rest-jwt-registration.git@d16389f66ae8a87bcb6ac7df51394329aa8e6a05
 django-treebeard==4.5.1

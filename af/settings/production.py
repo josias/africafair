@@ -1,4 +1,4 @@
-import django_heroku
+import django_on_heroku
 import os
 
 
@@ -27,21 +27,6 @@ INSTALLED_APPS.insert(0, 'whitenoise.runserver_nostatic')
 #    'whitenoise.middleware.WhiteNoiseMiddleware',
 #)
 
-MIDDLEWARE = [
-    # Simplified static file serving.
-    # https://warehouse.python.org/project/whitenoise/
-    'whitenoise.middleware.WhiteNoiseMiddleware',
-    'corsheaders.middleware.CorsMiddleware',
-    'django.middleware.common.CommonMiddleware',
-    'django.middleware.security.SecurityMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',    
-    'django.middleware.csrf.CsrfViewMiddleware',
-    'django.middleware.locale.LocaleMiddleware',
-    'django.contrib.auth.middleware.AuthenticationMiddleware',
-    'django.contrib.messages.middleware.MessageMiddleware',
-    'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    
-]
 
 # Static files (CSS, JavaScript, Images)
 STATIC_ROOT =  [BASE_DIR /'staticfiles',]
@@ -95,4 +80,4 @@ LOGGING = {
     }
 }
 
-django_heroku.settings(locals())
+django_on_heroku.settings(locals())

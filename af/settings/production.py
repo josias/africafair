@@ -50,10 +50,15 @@ STATIC_URL = '/static/'
 # Extra places for collecstatic
 STATICFILES_DIRS = [BASE_DIR /'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        
+    }
+}
 
-DATABASES = {'default' : dj_database_url.config(engine='django.db.backends.postgresql_psycopg2', 
-                                                conn_max_age=600, 
-                                                ssl_require=True)}
+DATABASES['default'] =  dj_database_url.config(conn_max_age=600, ssl_require=True)
+                                            
 
 LOGGING = {
     'version': 1,

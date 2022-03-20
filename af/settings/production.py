@@ -50,6 +50,10 @@ STATIC_URL = '/static/'
 # Extra places for collecstatic
 STATICFILES_DIRS = [BASE_DIR /'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
+
+# DATABASE CONFIGURATION
+db_from_env = dj_database_url.config(conn_max_age=600, ssl_require=True)
+DATABASES.update(default=db_from_env)
                                             
 
 LOGGING = {

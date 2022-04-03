@@ -37,12 +37,30 @@ STATICFILES_DIRS = [BASE_DIR /'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
 # DATABASE CONFIGURATION
-import dj_database_url
-if 'DATABASE_URL' in os.environ:
-    DATABASES = {
-        'default' : dj_database_url.config(),
-    }
-                                            
+# import dj_database_url
+#if 'DATABASE_URL' in os.environ:
+#    DATABASES = {
+#        'default' : dj_database_url.config(),
+#    }
+
+DATABASES = {'default': {   'ATOMIC_REQUESTS': False,
+                            'AUTOCOMMIT': True,
+                            'CONN_MAX_AGE': 600,
+                            'ENGINE': 'django.db.backends.postgresql_psycopg2',
+                            'HOST': 'ec2-3-209-61-239.compute-1.amazonaws.com',
+                            'NAME': 'dum9gs0mf2g7u',
+                            'OPTIONS': {'sslmode': 'require'},
+                            'PASSWORD': '********************',
+                            'PORT': 5432,
+                            'TEST': {'CHARSET': None,
+                                    'COLLATION': None,
+                                    'MIGRATE': True,
+                                    'MIRROR': None,
+                                    'NAME': None},
+                            'TIME_ZONE': None,
+                            'USER': 'zzktxuxwbnvjee'
+                        }
+                }                                            
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,

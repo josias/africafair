@@ -17,6 +17,18 @@ ALLOWED_HOSTS = [
     '.herokuapp.com',
 ]
 
+# new  line
+CORS_ORIGIN_WHITELIST = [
+    'https://fathomless-gorge-02722.herokuapp.com',
+
+]
+
+CSRF_TRUSTED_ORIGINS = [
+    'https://fathomless-gorge-02722.herokuapp.com',
+    '.herokuapp.com'
+]
+
+
 SECRET_KEY = os.environ['SECRET_KEY']
 
 INSTALLED_APPS.insert(0, 'whitenoise.runserver_nostatic')
@@ -36,13 +48,13 @@ STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR /'static']
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedStaticFilesStorage'
 
-# DATABASE CONFIGURATION
-# import dj_database_url
-#if 'DATABASE_URL' in os.environ:
-#    DATABASES = {
-#        'default' : dj_database_url.config(),
-#    }
-
+#DATABASE CONFIGURATION
+import dj_database_url
+if 'DATABASE_URL' in os.environ:
+    DATABASES = {
+        'default' : dj_database_url.config(),
+    }
+"""
 DATABASES = {'default': {   'ATOMIC_REQUESTS': False,
                             'AUTOCOMMIT': True,
                             'CONN_MAX_AGE': 600,
@@ -60,7 +72,7 @@ DATABASES = {'default': {   'ATOMIC_REQUESTS': False,
                             'TIME_ZONE': None,
                             'USER': 'zzktxuxwbnvjee'
                         }
-                }                                            
+                }  """                                          
 LOGGING = {
     'version': 1,
     'disable_existing_loggers': False,
